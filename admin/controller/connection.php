@@ -1,8 +1,8 @@
 <?php
 
-$connection = mysqli_connect("localhost", "root", "", "angkatan3_pra_ujikom");
+$connection = mysqli_connect("localhost", "root", "", "angkatan3_laundry");
 
-if(!$connection){
+if (!$connection) {
     echo "gagal konak, eh konek";
     die;
 }
