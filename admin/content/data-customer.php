@@ -11,7 +11,7 @@ $queryDataCustomer = mysqli_query($connection, "SELECT* FROM customer  WHERE del
             <div align="right" class="button-action">
                 <a href="?pg=add-data-customer" class="btn btn-primary">Add</a>
             </div>
-            <table class="table table-bordered table-striped table-hover table-responsive mt-3 mb-3">
+            <table class="table table-bordered table-striped table-hover table-responsive mt-3">
                 <thead>
                     <tr>
                         <th>#</th>

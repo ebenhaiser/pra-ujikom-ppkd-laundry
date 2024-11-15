@@ -38,7 +38,7 @@ if (isset($_GET['delete'])) {
           </div>
           <div class="mb-3">
             <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-              <?php echo isset($_GET['edit']) ? 'Atur' : 'Tambah' ?>
+              <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
             </button>
           </div>
       </form>

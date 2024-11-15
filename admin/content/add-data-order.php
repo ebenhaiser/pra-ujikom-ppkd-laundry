@@ -4,59 +4,75 @@ include 'controller/admin-validation.php';
 
 if (isset($_GET['delete'])) {
     $idDelete = $_GET['delete'];
-    $query = mysqli_query($connection, "UPDATE customer SET deleted_at=1 WHERE id='$idDelete'");
-    header("Location: ?pg=data-customer&delete=success");
+    $query = mysqli_query($connection, "UPDATE trans_order SET deleted_at=1 WHERE id='$idDelete'");
+    header("Location: ?pg=data-order&delete=success");
 } else if (isset($_GET['edit'])) {
     $idEdit = $_GET['edit'];
-    $queryEdit = mysqli_query($connection, "SELECT * FROM customer WHERE id='$idEdit'");
+    $queryEdit = mysqli_query($connection, "SELECT * FROM trans_order WHERE id='$idEdit'");
     $rowEdit = mysqli_fetch_assoc($queryEdit);
 
     if (isset($_POST['edit'])) {
-        $customer_name = $_POST['customer_name'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
+        $id_customer = $_POST['id_customer'];
+        $order_code = $_POST['order_code'];
+        $order_date = $_POST['order_date'];
+        $order_status = $_POST['order_status'];
 
-        $queryEdit = mysqli_query($connection, "UPDATE customer SET customer_name='$customer_name', phone='$phone', address='$address' WHERE id='$idEdit'");
-        header("Location: ?pg=data-customer&edit=success");
+        $queryEdit = mysqli_query($connection, "UPDATE trans_order SET id_customer='$id_customer', order_code='$order_code', order_date='$order_date', order_status='$id_level' WHERE id='$idEdit'");
+        header("Location: ?pg=data-order&edit=success");
     }
 } else if (isset($_POST['add'])) {
-    $customer_name = $_POST['customer_name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
+    $id_customer = $_POST['id_customer'];
+    $order_code = $_POST['order_code'];
+    $order_date = $_POST['order_date'];
+    $order_status = $_POST['order_status'];
 
-    $queryAdd = mysqli_query($connection, "INSERT INTO customer (customer_name, phone, address) VALUES ('$customer_name', '$phone', '$address')");
-    header("Location: ?pg=data-customer&add=success");
+    $queryAdd = mysqli_query($connection, "INSERT INTO trans_order (id_customer, order_code, order_date, order_status) VALUES ('$id_customer', '$order_code', '$order_date', '$order_status')");
+    header("Location: ?pg=data-order&add=success");
 }
 
-$queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0");
+$queryCustomer = mysqli_query($connection, "SELECT * FROM customer WHERE deleted_at=0");
 ?>
 
 <div class="wrapper">
     <div class="card mt-3">
         <div class="card-body">
-            <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Data Customer</h3>
+            <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Data Transaction</h3>
             <form action="" method="post">
                 <div class="row">
                     <div class="col-sm-6 mb-3">
-                        <label for="customer_name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Masukkan nama"
-                            value="<?= isset($_GET['edit']) ? $rowEdit['customer_name'] : '' ?>" required>
+                        <label for="level" class="form-label">Customer:</label>
+                        <select class="form-control" name="id_customer" id="">
+                            <option value=""> -- choose customer -- </option>
+                            <?php while ($rowCustomer = mysqli_fetch_assoc($queryCustomer)) : ?>
+                                <option value="<?= $rowCustomer['id'] ?>"
+                                    <?= isset($_GET['edit']) && ($rowCustomer['id'] == $rowEdit['id_customer']) ? 'selected' : '' ?>>
+                                    <?= $rowCustomer['customer_name'] ?></option>
+                            <?php endwhile ?>
+                        </select>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="phone" name="phone" placeholder="Masukkan phone"
-                            value="<?= isset($_GET['edit']) ? $rowEdit['phone'] : '' ?>" required>
+                        <label for="order_code" class="form-label">Order Code:</label>
+                        <input type="text" class="form-control" id="order_code" name="order_code"
+                            value="<?= isset($_GET['edit']) ? $rowEdit['order_code'] : '' ?>" readonly>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="order_date" class="form-label">Order Date:</label>
+                        <input type="date" class="form-control" id="order_date" name="order_date" placeholder="Masukkan order date"
+                            value="<?= isset($_GET['edit']) ? $rowEdit['order_date'] : '' ?>" required>
                     </div>
 
                     <div class="col-sm-6 mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <textarea type="address" class="form-control" id="address" name="address" for="address"
-                            placeholder="Masukkan address" <?= isset($_GET['edit']) ? '' : 'required' ?>><?= isset($_GET['edit']) ? $rowEdit['address'] : '' ?></textarea>
+                        <label for="order_status" class="form-label">Order Status:</label>
+                        <select class="form-control" name="order_status" id="">
+                            <option value="0"> -- order status -- </option>
+                            <option value="0" <?= isset($_GET['edit']) && $rowEdit['order_status'] == 0 ? 'selected' : '' ?>>New</option>
+                            <option value="1" <?= isset($_GET['edit']) && $rowEdit['order_status'] == 0 ? 'selected' : '' ?>>Done</option>
+                        </select>
                     </div>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-                        <?php echo isset($_GET['edit']) ? 'Atur' : 'Tambah' ?>
+                        <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
                     </button>
                 </div>
             </form>

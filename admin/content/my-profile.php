@@ -30,6 +30,12 @@ if (isset($_POST['edit'])) {
 }
 
 $queryLevel = mysqli_query($connection, "SELECT * FROM level");
+
+if ((isset($_GET['pg']) == 'my-profile') && (isset($_GET['edit']) == 'success')) {
+    header('location: ?pg=my-profile');
+    die;
+}
+
 ?>
 
 <div class="wrapper">

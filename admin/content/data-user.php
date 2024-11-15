@@ -11,7 +11,7 @@ $queryDataUser = mysqli_query($connection, "SELECT user.id, user.deleted_at, use
       <div align="right" class="button-action">
         <a href="?pg=add-data-user" class="btn btn-primary">Add</a>
       </div>
-      <table class="table table-bordered table-striped table-hover table-responsive mt-3 mb-3">
+      <table class="table table-bordered table-striped table-hover table-responsive mt-3">
         <thead>
           <tr>
             <th>#</th>

@@ -6,7 +6,7 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
 ?>
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <div class="app-brand demo gap-2">
+  <div class="app-brand demo gap-2 mb-4">
     <img src="img/logo/logo.png" alt="" width="30px"><br><br>
     <span class="demo text-body fw-bolder" style="font-size: 25px;">Laundry Faith</span>
 

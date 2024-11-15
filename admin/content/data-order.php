@@ -1,17 +1,17 @@
 <?php
 include 'controller/admin-validation.php';
 
-$queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.customer_name FROM trans_order LEFT JOIN customer ON trans_order.id_customer = customer.id WHERE trans_order.deleted_at=0 ORDER BY trans_order.id DESC");
+$queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.customer_name FROM trans_order LEFT JOIN customer ON trans_order.id_customer = customer.id WHERE trans_order.deleted_at=0 ORDER BY trans_order.order_date DESC");
 ?>
 
 <div class="wrapper">
     <div class="card mt-3">
         <div class="card-body">
-            <h3 class="card-title">Data Order</h3>
+            <h3 class="card-title">Transaction Laundry</h3>
             <div align="right" class="button-action">
                 <a href="?pg=add-data-order" class="btn btn-primary">Add</a>
             </div>
-            <table class="table table-bordered table-striped table-hover table-responsive mt-3 mb-3">
+            <table class="table table-bordered table-striped table-hover table-responsive mt-3">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -27,6 +27,7 @@ $queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.cust
                     $no = 1;
                     while ($rowDataOrder = mysqli_fetch_assoc($queryDataOrder)) : ?>
                         <tr>
+                            <td><?= $no++ ?></td>
                             <td><?= isset($rowDataOrder['order_code']) ? $rowDataOrder['order_code'] : '' ?></td>
                             <td><?= isset($rowDataOrder['customer_name']) ? $rowDataOrder['customer_name'] : '' ?></td>
                             <td><?= isset($rowDataOrder['order_date']) ? $rowDataOrder_date['order'] : '' ?></td>
@@ -45,13 +46,9 @@ $queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.cust
                             ?>
                             <td><?= $status ?></td>
                             <td>
-                                <a href="?pg=add-data-order&edit=<?php echo $rowDataOrder['id'] ?>">
+                                <a href="?pg=add-data-order&print=<?php echo $rowDataOrder['id'] ?>">
                                     <button class="btn btn-light">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
-                                            viewBox="0 0 16 16">
-                                            <path
-                                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                        </svg>
+                                        <span class="tf-icon bx bx-print bx-18px"></span>
                                     </button>
                                 </a>
                                 |

@@ -11,7 +11,7 @@ include 'controller/admin-validation.php';
       <div align="right" class="button-action">
         <a href="?pg=add-data-level" class="btn btn-primary">Add</a>
       </div>
-      <table class="table table-bordered table-striped table-hover table-responsive mt-3 mb-3">
+      <table class="table table-bordered table-striped table-hover table-responsive mt-3">
         <thead>
           <tr>
             <th>#</th>
