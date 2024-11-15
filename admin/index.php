@@ -39,6 +39,8 @@ if (empty($_SESSION)) {
   <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
   <meta name="description" content="" />
+  <link href="img/logo/logo.png" rel="icon">
+  <link href="img/logo/logo.png" rel="apple-touch-icon">
 
   <?php include 'inc/head.php' ?>
 </head>

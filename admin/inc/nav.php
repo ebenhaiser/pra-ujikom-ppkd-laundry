@@ -1,7 +1,7 @@
 <?php
 include 'controller/connection.php';
 $id = $_SESSION['id'];
-$queryLogin = mysqli_query($connection, "SELECT * FROM users WHERE id='$id'");
+$queryLogin = mysqli_query($connection, "SELECT * FROM user WHERE id='$id'");
 $rowLogin = mysqli_fetch_assoc($queryLogin);
 ?>
 
@@ -35,7 +35,7 @@ $rowLogin = mysqli_fetch_assoc($queryLogin);
       <li class="nav-item navbar-dropdown dropdown-user dropdown">
         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
           <div class="avatar avatar-online">
-            <img src="<?= !empty($rowLogin['foto']) ? 'img/foto_profil_user/' . $rowLogin['foto'] : 'https://placehold.co/100' ?>" alt class="w-px-40 h-auto rounded-circle" />
+            <img src="<?= !empty($rowLogin['profile_picture']) ? 'img/profile_picture/' . $rowLogin['profile_picture'] : 'https://placehold.co/100' ?>" alt class="w-px-40 h-auto rounded-circle" />
           </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -44,13 +44,13 @@ $rowLogin = mysqli_fetch_assoc($queryLogin);
               <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
-                    <img src="<?= !empty($rowLogin['foto']) ? 'img/foto_profil_user/' . $rowLogin['foto'] : 'https://placehold.co/100' ?>" alt="User Profile Image"
+                    <img src="<?= !empty($rowLogin['profile_picture']) ? 'img/profile_picture/' . $rowLogin['profile_picture'] : 'https://placehold.co/100' ?>" alt="User Profile Image"
                       class="w-px-40 h-auto rounded-circle" />
                   </div>
                 </div>
                 <div class="flex-grow-1">
                   <span class="fw-semibold d-block">
-                    <?php echo isset($rowLogin['nama_lengkap']) ? $rowLogin['nama_lengkap'] : '' ?>
+                    <?php echo isset($rowLogin['name']) ? $rowLogin['name'] : '' ?>
                   </span>
                   <small class="text-muted"><?= isset($rowLogin['email']) ? $rowLogin['email'] : '' ?></small>
                 </div>

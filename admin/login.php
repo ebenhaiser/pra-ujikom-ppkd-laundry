@@ -5,7 +5,8 @@ if (isset($_POST['login'])) {
     $email    = $_POST['email']; //untuk mengambil nilai dari input
     $password = $_POST['password'];
 
-    $queryLogin = mysqli_query($connection, "SELECT * FROM users WHERE email='$email'");
+    $queryLogin = mysqli_query($connection, "SELECT * FROM user WHERE email='$email' AND deleted_at=0
+    ");
     // mysqli_num_row() : untuk melihat total data di dalam table
     if (mysqli_num_rows($queryLogin) > 0) {
         $rowLogin = mysqli_fetch_assoc($queryLogin);
@@ -56,7 +57,8 @@ if (isset($_POST['login'])) {
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link href="img/logo/logo.png" rel="icon">
+    <link href="img/logo/logo.png" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -98,8 +100,8 @@ if (isset($_POST['login'])) {
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center gap-2">
-                            <img src="img/logo/ppkd_logo.jpg" alt="" width="50px"><br><br>
-                            <span class="demo text-body fw-bolder" style="font-size: 25px;">Admin PPKD</span>
+                            <img src="img/logo/logo.png" alt="" width="50px"><br><br>
+                            <span class="demo text-body fw-bolder" style="font-size: 25px;">Laundry Faith</span>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Selamat Datang ! 👋</h4>

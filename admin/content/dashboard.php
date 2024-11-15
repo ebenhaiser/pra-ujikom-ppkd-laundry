@@ -5,8 +5,8 @@
         <div class="card-body">
           <div align="center">
             <h3 class="card-title mb-3" style="margin-top: 150px">Dashboard</h3>
-            <img src="img/logo/ppkd_logo.jpg" class="mt-3 mx-auto" alt="" width="100">
-            <h5 class="card-title mt-3" style="margin-bottom: 150px" align="center">Admin PPKD</h5>
+            <img src="img/logo/logo.png" class="mt-3 mx-auto" alt="" width="100">
+            <h4 class="card-title mt-4" style="margin-bottom: 150px" align="center">Laundry Faith</h4>
           </div>
         </div>
       </div>

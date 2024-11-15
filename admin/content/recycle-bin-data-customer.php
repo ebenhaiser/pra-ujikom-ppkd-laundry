@@ -1,23 +1,24 @@
 <?php
-include 'controller/administrator-validation.php';
+include 'controller/admin-validation.php';
 
-$queryDataPendaftar = mysqli_query($connection, "SELECT peserta_pelatihan.*, jurusan.nama_jurusan, gelombang.nama_gelombang FROM peserta_pelatihan LEFT JOIN jurusan ON peserta_pelatihan.id_jurusan=jurusan.id LEFT JOIN gelombang ON peserta_pelatihan.id_gelombang=gelombang.id WHERE peserta_pelatihan.deleted_at=1 ORDER BY id DESC");
 
+
+$queryDataCustomer = mysqli_query($connection, "SELECT * FROM customer WHERE deleted_at=1 ORDER BY id DESC");
 ?>
 
 <div class="wrapper">
     <div class="card mt-3">
         <div class="card-body">
-            <h3 class="card-title">Restore Data Pendaftar</h3>
+            <h3 class="card-title">Recycle Bin Data Customer</h3>
             <div align="right" class="button-action">
                 <a onclick="return confirm ('Apakah anda yakin akan memulihkan semua data?')"
-                    href="?pg=restore-data-pendaftar&restore-all=process">
+                    href="?pg=restore-data-customer&restore-all=process">
                     <button class="btn" style="background-color: #00bf0d; color:white;">
                         Restore All
                     </button>
                 </a>
                 <a onclick="return confirm ('Apakah anda yakin akan menghapus semua data?')"
-                    href="?pg=restore-data-pendaftar&delete-all=process">
+                    href="?pg=restore-data-customer&delete-all=process">
                     <button class="btn" style="background-color: #f01202; color:white;">
                         Delete All
                     </button>
@@ -27,27 +28,23 @@ $queryDataPendaftar = mysqli_query($connection, "SELECT peserta_pelatihan.*, jur
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Jurusan</th>
-                        <th>Gelombang</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Nomor Telepon</th>
-                        <th>Aksi</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 1;
-                    while ($rowDataPendaftar = mysqli_fetch_assoc($queryDataPendaftar)) : ?>
+                    while ($rowDataCustomer = mysqli_fetch_assoc($queryDataCustomer)) : ?>
                         <tr>
                             <td><?= $no++ ?></td>
-                            <td><?= isset($rowDataPendaftar['nama_jurusan']) ? $rowDataPendaftar['nama_jurusan'] : '-' ?></td>
-                            <td><?= isset($rowDataPendaftar['nama_gelombang']) ? $rowDataPendaftar['nama_gelombang'] : '-' ?></td>
-                            <td><?= isset($rowDataPendaftar['nama_lengkap']) ? $rowDataPendaftar['nama_lengkap'] : '-' ?></td>
-                            <td><?= isset($rowDataPendaftar['email']) ? $rowDataPendaftar['email'] : '-' ?></td>
-                            <td><?= isset($rowDataPendaftar['nomor_hp']) ? $rowDataPendaftar['nomor_hp'] : '-' ?></td>
+                            <td><?= isset($rowDataCustomer['customer_name']) ? $rowDataCustomer['customer_name'] : '-' ?></td>
+                            <td><?= isset($rowDataCustomer['phone']) ? $rowDataCustomer['phone'] : '-' ?></td>
+                            <td><?= isset($rowDataCustomer['address']) ? $rowDataCustomer['address'] : '-' ?></td>
                             <td>
-                                <a href="?pg=restore-data-pendaftar&restore=<?php echo $rowDataPendaftar['id'] ?>">
+                                <a href="?pg=restore-data-customer&restore=<?php echo $rowDataCustomer['id'] ?>">
                                     <button class="btn btn-light">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -56,7 +53,7 @@ $queryDataPendaftar = mysqli_query($connection, "SELECT peserta_pelatihan.*, jur
                                 </a>
                                 |
                                 <a onclick="return confirm ('Apakah anda yakin akan memulihkan data ini?')"
-                                    href="?pg=restore-data-pendaftar&restore-row=<?php echo $rowDataPendaftar['id'] ?>">
+                                    href="?pg=restore-data-customer&restore-row=<?php echo $rowDataCustomer['id'] ?>">
                                     <button class="btn btn-light">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
                                             <path d="M9.302 1.256a1.5 1.5 0 0 0-2.604 0l-1.704 2.98a.5.5 0 0 0 .869.497l1.703-2.981a.5.5 0 0 1 .868 0l2.54 4.444-1.256-.337a.5.5 0 1 0-.26.966l2.415.647a.5.5 0 0 0 .613-.353l.647-2.415a.5.5 0 1 0-.966-.259l-.333 1.242zM2.973 7.773l-1.255.337a.5.5 0 1 1-.26-.966l2.416-.647a.5.5 0 0 1 .612.353l.647 2.415a.5.5 0 0 1-.966.259l-.333-1.242-2.545 4.454a.5.5 0 0 0 .434.748H5a.5.5 0 0 1 0 1H1.723A1.5 1.5 0 0 1 .421 12.24zm10.89 1.463a.5.5 0 1 0-.868.496l1.716 3.004a.5.5 0 0 1-.434.748h-5.57l.647-.646a.5.5 0 1 0-.708-.707l-1.5 1.5a.5.5 0 0 0 0 .707l1.5 1.5a.5.5 0 1 0 .708-.707l-.647-.647h5.57a1.5 1.5 0 0 0 1.302-2.244z" />
@@ -65,7 +62,7 @@ $queryDataPendaftar = mysqli_query($connection, "SELECT peserta_pelatihan.*, jur
                                 </a>
                                 |
                                 <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?pg=restore-data-pendaftar&delete-row=<?php echo $rowDataPendaftar['id'] ?>">
+                                    href="?pg=restore-data-customer&delete-row=<?php echo $rowDataCustomer['id'] ?>">
                                     <button class="btn btn-light">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                                             viewBox="0 0 16 16">

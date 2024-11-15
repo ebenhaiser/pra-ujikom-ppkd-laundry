@@ -1,6 +1,6 @@
 <?php
-$queryDataLevel = mysqli_query($connection, "SELECT * FROM levels WHERE deleted_at=0 ORDER BY id ASC");
-include 'controller/administrator-validation.php';
+$queryDataLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0 ORDER BY id ASC");
+include 'controller/admin-validation.php';
 
 ?>
 
@@ -9,14 +9,14 @@ include 'controller/administrator-validation.php';
     <div class="card-body">
       <h3 class="card-title">Data Level</h3>
       <div align="right" class="button-action">
-        <a href="?pg=add-data-level" class="btn btn-primary">Tambah</a>
+        <a href="?pg=add-data-level" class="btn btn-primary">Add</a>
       </div>
-      <table class="table table-bordered table-striped table-hover table-responsive mt-3">
+      <table class="table table-bordered table-striped table-hover table-responsive mt-3 mb-3">
         <thead>
           <tr>
             <th>#</th>
             <th>Nama level</th>
-            <th>Aksi</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@ include 'controller/administrator-validation.php';
           while ($rowDataLevel = mysqli_fetch_assoc($queryDataLevel)) : ?>
             <tr>
               <td><?= $no++ ?></td>
-              <td><?= isset($rowDataLevel['nama_level']) ? $rowDataLevel['nama_level'] : '-' ?></td>
+              <td><?= isset($rowDataLevel['level_name']) ? $rowDataLevel['level_name'] : '-' ?></td>
               <td>
                 <a href="?pg=add-data-level&edit=<?php echo $rowDataLevel['id'] ?>">
                   <button class="btn btn-light">

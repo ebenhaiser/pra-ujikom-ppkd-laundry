@@ -1,47 +1,36 @@
 <?php
 require_once 'controller/connection.php';
-include 'controller/administrator-validation.php';
+include 'controller/admin-validation.php';
 
 if (isset($_GET['delete'])) {
   $idDelete = $_GET['delete'];
-  $query = mysqli_query($connection, "UPDATE users SET deleted_at=1 WHERE id='$idDelete'");
+  $query = mysqli_query($connection, "UPDATE user SET deleted_at=1 WHERE id='$idDelete'");
   header("Location: ?pg=data-user&delete=success");
 } else if (isset($_GET['edit'])) {
   $idEdit = $_GET['edit'];
-  $queryEdit = mysqli_query($connection, "SELECT * FROM users WHERE id='$idEdit'");
+  $queryEdit = mysqli_query($connection, "SELECT * FROM user WHERE id='$idEdit'");
   $rowEdit = mysqli_fetch_assoc($queryEdit);
 
   if (isset($_POST['edit'])) {
-    $nama_lengkap = $_POST['nama_lengkap'];
+    $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'] ? $_POST['password'] : $rowEdit['password'];
     $id_level = $_POST['id_level'];
-    if ($id_level != 2) {
-      $id_jurusan = "";
-    } else {
-      $id_jurusan = $_POST['id_jurusan'];
-    }
 
-    $queryEdit = mysqli_query($connection, "UPDATE users SET nama_lengkap='$nama_lengkap', email='$email', password='$password', id_level='$id_level', id_jurusan='$id_jurusan' WHERE id='$idEdit'");
+    $queryEdit = mysqli_query($connection, "UPDATE user SET name='$name', email='$email', password='$password', id_level='$id_level' WHERE id='$idEdit'");
     header("Location: ?pg=data-user&edit=success");
   }
 } else if (isset($_POST['add'])) {
-  $nama_lengkap = $_POST['nama_lengkap'];
+  $name = $_POST['name'];
   $email = $_POST['email'];
   $password = $_POST['password'];
   $id_level = $_POST['id_level'];
-  if ($id_level != 2) {
-    $id_jurusan = "";
-  } else {
-    $id_jurusan = $_POST['id_jurusan'];
-  }
 
-  $queryAdd = mysqli_query($connection, "INSERT INTO users (nama_lengkap, email, password, id_level, id_jurusan) VALUES ('$nama_lengkap', '$email', '$password', '$id_level', '$id_jurusan')");
+  $queryAdd = mysqli_query($connection, "INSERT INTO user (name, email, password, id_level) VALUES ('$name', '$email', '$password', '$id_level')");
   header("Location: ?pg=data-user&add=success");
 }
 
-$queryLevel = mysqli_query($connection, "SELECT * FROM levels");
-$queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
+$queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0");
 ?>
 
 <div class="wrapper">
@@ -51,9 +40,9 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
       <form action="" method="post">
         <div class="row">
           <div class="col-sm-6 mb-3">
-            <label for="nama_lengkap" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan nama"
-              value="<?= isset($_GET['edit']) ? $rowEdit['nama_lengkap'] : '' ?>" required>
+            <label for="name" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama"
+              value="<?= isset($_GET['edit']) ? $rowEdit['name'] : '' ?>" required>
           </div>
           <div class="col-sm-6 mb-3">
             <label for="email" class="form-label">Email</label>
@@ -67,18 +56,7 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
               <?php while ($rowLevel = mysqli_fetch_assoc($queryLevel)) : ?>
                 <option value="<?= $rowLevel['id'] ?>"
                   <?= isset($_GET['edit']) && ($rowLevel['id'] == $rowEdit['id_level']) ? 'selected' : '' ?>>
-                  <?= $rowLevel['nama_level'] ?></option>
-              <?php endwhile ?>
-            </select>
-          </div>
-          <div class="col-sm-6 mb-3">
-            <label for="email" class="form-label">Jurusan</label>
-            <select class="form-control" name="id_jurusan" id="">
-              <option value=""> -- Add Jurusan -- </option>
-              <?php while ($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
-                <option value="<?= $rowJurusan['id'] ?>"
-                  <?= isset($_GET['edit']) && ($rowJurusan['id'] == $rowEdit['id_jurusan']) ? 'selected' : '' ?>>
-                  <?= $rowJurusan['nama_jurusan'] ?></option>
+                  <?= $rowLevel['level_name'] ?></option>
               <?php endwhile ?>
             </select>
           </div>

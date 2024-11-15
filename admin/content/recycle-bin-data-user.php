@@ -1,9 +1,9 @@
 <?php
-include 'controller/administrator-validation.php';
+include 'controller/admin-validation.php';
 
 
 
-$queryDataUser = mysqli_query($connection, "SELECT users.id, users.deleted_at, users.nama_lengkap, users.email, levels.nama_level, jurusan.nama_jurusan FROM users LEFT JOIN levels ON users.id_level = levels.id LEFT JOIN jurusan ON users.id_jurusan = jurusan.id WHERE users.deleted_at=1 ORDER BY users.id_level DESC, users.id DESC");
+$queryDataUser = mysqli_query($connection, "SELECT user.id, user.deleted_at, user.name, user.email, level.level_name FROM user LEFT JOIN level ON user.id_level = level.id WHERE user.deleted_at=1 ORDER BY user.id_level DESC, user.id DESC");
 ?>
 
 <div class="wrapper">
@@ -13,13 +13,13 @@ $queryDataUser = mysqli_query($connection, "SELECT users.id, users.deleted_at, u
       <div align="right" class="button-action">
         <a onclick="return confirm ('Apakah anda yakin akan memulihkan semua data?')"
           href="?pg=restore-data-user&restore-all=process">
-          <button class="btn" style="background-color: #00bf0d; color:white;" >
+          <button class="btn" style="background-color: #00bf0d; color:white;">
             Restore All
           </button>
         </a>
         <a onclick="return confirm ('Apakah anda yakin akan menghapus semua data?')"
           href="?pg=restore-data-user&delete-all=process">
-          <button class="btn" style="background-color: #f01202; color:white;" >
+          <button class="btn" style="background-color: #f01202; color:white;">
             Delete All
           </button>
         </a>
@@ -31,7 +31,6 @@ $queryDataUser = mysqli_query($connection, "SELECT users.id, users.deleted_at, u
             <th>Level</th>
             <th>Nama Lengkap</th>
             <th>Email</th>
-            <th>Jurusan</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -41,10 +40,9 @@ $queryDataUser = mysqli_query($connection, "SELECT users.id, users.deleted_at, u
           while ($rowDataUser = mysqli_fetch_assoc($queryDataUser)) : ?>
             <tr>
               <td><?= $no++ ?></td>
-              <td><?= isset($rowDataUser['nama_level']) ? $rowDataUser['nama_level'] : '-' ?></td>
-              <td><?= isset($rowDataUser['nama_lengkap']) ? $rowDataUser['nama_lengkap'] : '-' ?></td>
+              <td><?= isset($rowDataUser['level_name']) ? $rowDataUser['level_name'] : '-' ?></td>
+              <td><?= isset($rowDataUser['name']) ? $rowDataUser['name'] : '-' ?></td>
               <td><?= isset($rowDataUser['email']) ? $rowDataUser['email'] : '-' ?></td>
-              <td><?= isset($rowDataUser['nama_jurusan']) ? $rowDataUser['nama_jurusan'] : '-' ?></td>
               <td>
                 <a href="?pg=restore-data-user&restore=<?php echo $rowDataUser['id'] ?>">
                   <button class="btn btn-light">

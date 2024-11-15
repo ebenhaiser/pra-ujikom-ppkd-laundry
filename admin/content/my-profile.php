@@ -3,20 +3,15 @@ require_once 'controller/connection.php';
 
 
 $idEdit = $_SESSION['id'];
-$queryEdit = mysqli_query($connection, "SELECT * FROM users WHERE id='$idEdit'");
+$queryEdit = mysqli_query($connection, "SELECT * FROM user WHERE id='$idEdit'");
 $rowEdit = mysqli_fetch_assoc($queryEdit);
 
 if (isset($_POST['edit'])) {
-    $nama_lengkap = $_POST['nama_lengkap'];
+    $name = $_POST['name'];
     $email = $_POST['email'];
-    if ($id_level != 2) {
-        $id_jurusan = "";
-    } else {
-        $id_jurusan = $_POST['id_jurusan'];
-    }
 
-    if (!empty($_FILES['foto']['name'])) {
-        $namaFotoLama = $_FILES['foto']['name'];
+    if (!empty($_FILES['profile_picture']['name'])) {
+        $namaFotoLama = $_FILES['profile_picture']['name'];
 
         $ext = array('jpg', 'jpeg', 'png', 'jfif', 'webp', 'heic');
         $img_ext = pathinfo($namaFotoLama, PATHINFO_EXTENSION);
@@ -24,18 +19,17 @@ if (isset($_POST['edit'])) {
         if (!in_array($img_ext, $ext)) {
             header("Location: ?pg=my-profile&error=ext");
         } else {
-            unlink('img/foto_profil_user/' . $rowEdit['photo']);
-            $new_image_name = "foto_profil_user" . $idEdit . "." . $img_ext;
-            move_uploaded_file($_FILES['foto']['tmp_name'], 'img/foto_profil_user/' . $new_image_name);
-            $queryEdit = mysqli_query($connection, "UPDATE users SET nama_lengkap='$nama_lengkap', email='$email', foto='$new_image_name' WHERE id='$idEdit'");
+            unlink('img/profile_picture/' . $rowEdit['photo']);
+            $new_image_name = "profile_picture" . $idEdit . "." . $img_ext;
+            move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'img/profile_picture/' . $new_image_name);
+            $queryEdit = mysqli_query($connection, "UPDATE user SET name='$name', email='$email', profile_picture='$new_image_name' WHERE id='$idEdit'");
         }
     }
-    $queryEdit = mysqli_query($connection, "UPDATE users SET nama_lengkap='$nama_lengkap', email='$email' WHERE id='$idEdit'");
+    $queryEdit = mysqli_query($connection, "UPDATE user SET name='$name', email='$email' WHERE id='$idEdit'");
     header("Location: ?pg=my-profile&edit=success");
 }
 
-$queryLevel = mysqli_query($connection, "SELECT * FROM levels");
-$queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
+$queryLevel = mysqli_query($connection, "SELECT * FROM level");
 ?>
 
 <div class="wrapper">
@@ -45,9 +39,9 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-6 mb-3">
-                        <label for="nama_lengkap" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan nama"
-                            value="<?= isset($rowEdit['nama_lengkap']) ? $rowEdit['nama_lengkap'] : '' ?>" required>
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama"
+                            value="<?= isset($rowEdit['name']) ? $rowEdit['name'] : '' ?>" required>
                     </div>
                     <div class="col-sm-6 mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -62,7 +56,7 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                             <?php while ($rowLevel = mysqli_fetch_assoc($queryLevel)) : ?>
                                 <option value="<?= $rowLevel['id'] ?>"
                                     <?= isset($rowEdit['id_level']) && ($rowLevel['id'] == $rowEdit['id_level']) ? 'selected' : '' ?>>
-                                    <?= $rowLevel['nama_level'] ?></option>
+                                    <?= $rowLevel['level_name'] ?></option>
                             <?php endwhile ?>
                         </select>
                     </div>
@@ -81,8 +75,8 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                     <?php endif ?>
                     <div class="col-sm-6 mb-3">
                         <label for="photoProfile" class="form-label">Foto Profil</label>
-                        <input type="file" class="form-control" id="foto" name="foto">
-                        <img width="50%" src="<?= !empty($rowEdit['foto']) ? 'img/foto_profil_user/' . $rowEdit['foto'] : 'https://placehold.co/100' ?>" alt="" class="mt-4 rounded">
+                        <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                        <img width="50%" src="<?= !empty($rowEdit['profile_picture']) ? 'img/profile_picture/' . $rowEdit['profile_picture'] : 'https://placehold.co/100' ?>" alt="" class="mt-4 rounded">
                     </div>
                 </div>
                 <div class="mb-3">

@@ -2,8 +2,7 @@
 session_start();
 include 'controller/connection.php';
 
-$queryLevel = mysqli_query($connection, "SELECT * FROM levels");
-$queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
+$queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0");
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +38,8 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link href="img/logo/logo.png" rel="icon">
+    <link href="img/logo/logo.png" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,8 +81,8 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center gap-2">
-                        <img src="img/logo/ppkd_logo.jpg" alt="" width="30px"><br><br>
-                        <span class="demo text-body fw-bolder" style="font-size: 25px;">Admin PPKD</span>
+                            <img src="img/logo/logo.png" alt="" width="30px"><br><br>
+                            <span class="demo text-body fw-bolder" style="font-size: 25px;">Laundry Faith</span>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Selamat Datang ! 👋</h4>
@@ -93,27 +93,18 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                                 <label for="level" class="form-label">Level</label>
                                 <select class="form-select" name="id_level" id="level">
                                     <option value=""> -- Pilih Level -- </option>
-                                    <?php while($rowLevel = mysqli_fetch_assoc($queryLevel)) : ?>
-                                    <option value="<?php echo $rowLevel['id'] ?>"><?php echo $rowLevel['nama_level']?></option>
+                                    <?php while ($rowLevel = mysqli_fetch_assoc($queryLevel)) : ?>
+                                        <option value="<?php echo $rowLevel['id'] ?>"><?php echo $rowLevel['level_name'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="level" class="form-label">jurusan</label>
-                                <select class="form-select" name="id_jurusan" id="jurusan">
-                                    <option value=""> -- Pilih jurusan -- </option>
-                                    <?php while($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
-                                    <option value="<?php echo $rowJurusan['id'] ?>"><?php echo $rowJurusan['nama_jurusan']?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                                <label for="name" class="form-label">Nama Lengkap</label>
                                 <input
-                                    type="nama_lengkap"
+                                    type="name"
                                     class="form-control"
-                                    id="nama_lengkap"
-                                    name="nama_lengkap"
+                                    id="name"
+                                    name="name"
                                     placeholder="Masukkan nama lengkap anda"
                                     required
                                     autofocus />
@@ -130,7 +121,7 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                                     autofocus />
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                  <label class="form-label" for="password">Password</label>
+                                <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input
                                         required
