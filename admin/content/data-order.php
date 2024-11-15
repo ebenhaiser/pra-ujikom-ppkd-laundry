@@ -7,7 +7,7 @@ $queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.cust
 <div class="wrapper">
     <div class="card mt-3">
         <div class="card-body">
-            <h3 class="card-title">Transaction Laundry</h3>
+            <h3 class="card-title">Data Transaction</h3>
             <div align="right" class="button-action">
                 <a href="?pg=add-data-order" class="btn btn-primary">Add</a>
             </div>
