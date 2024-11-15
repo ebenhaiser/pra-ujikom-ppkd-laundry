@@ -28,7 +28,7 @@ if (isset($_GET['delete'])) {
 <div class="wrapper">
   <div class="card mt-3 ">
     <div class="card-body">
-      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Data Level</h3>
+      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Data Level</h3>
       <form action="" method="post">
         <div class="row">
           <div class="col-sm-6 mb-3">

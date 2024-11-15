@@ -36,7 +36,7 @@ $queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0"
 <div class="wrapper">
   <div class="card mt-3">
     <div class="card-body">
-      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Data User</h3>
+      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Data User</h3>
       <form action="" method="post">
         <div class="row">
           <div class="col-sm-6 mb-3">
