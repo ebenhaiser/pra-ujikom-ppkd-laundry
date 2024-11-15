@@ -19,7 +19,7 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-5 ms-5">
+  <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Detail Calon Peserta Pelatihan</h3>
       <img

@@ -1,24 +1,24 @@
-<?php 
+<?php
 $queryDataJurusan = mysqli_query($connection, "SELECT * FROM jurusan WHERE deleted_at=1 ORDER BY id ASC");
 include 'controller/administrator-validation.php';
 
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Restore Data Jurusan</h3>
       <div align="right" class="button-action">
         <!-- <a href="?pg=add-data-jurusan" class="btn btn-primary">Tambah</a> -->
         <a onclick="return confirm ('Apakah anda yakin akan memulihkan semua data?')"
           href="?pg=restore-data-jurusan&restore-all=process">
-          <button class="btn" style="background-color: #00bf0d; color:white;" >
+          <button class="btn" style="background-color: #00bf0d; color:white;">
             Restore All
           </button>
         </a>
         <a onclick="return confirm ('Apakah anda yakin akan menghapus semua data?')"
           href="?pg=restore-data-jurusan&delete-all=process">
-          <button class="btn" style="background-color: #f01202; color:white;" >
+          <button class="btn" style="background-color: #f01202; color:white;">
             Delete All
           </button>
         </a>
@@ -32,14 +32,14 @@ include 'controller/administrator-validation.php';
           </tr>
         </thead>
         <tbody>
-          <?php 
+          <?php
           $no = 1;
-          while($rowDataJurusan = mysqli_fetch_assoc($queryDataJurusan)) : ?>
-          <tr>
-            <td><?= $no++ ?></td>
-            <td><?= isset($rowDataJurusan['nama_jurusan']) ? $rowDataJurusan['nama_jurusan'] : '-' ?></td>
-            <td>
-            <a href="?pg=restore-data-jurusan&restore=<?php echo $rowDataJurusan['id'] ?>">
+          while ($rowDataJurusan = mysqli_fetch_assoc($queryDataJurusan)) : ?>
+            <tr>
+              <td><?= $no++ ?></td>
+              <td><?= isset($rowDataJurusan['nama_jurusan']) ? $rowDataJurusan['nama_jurusan'] : '-' ?></td>
+              <td>
+                <a href="?pg=restore-data-jurusan&restore=<?php echo $rowDataJurusan['id'] ?>">
                   <button class="btn btn-light">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -68,9 +68,10 @@ include 'controller/administrator-validation.php';
                     </svg>
                   </button>
                 </a>
-            </td>
-          </tr>
-          <?php endwhile; // End While ?>
+              </td>
+            </tr>
+          <?php endwhile; // End While 
+          ?>
         </tbody>
       </table>
     </div>

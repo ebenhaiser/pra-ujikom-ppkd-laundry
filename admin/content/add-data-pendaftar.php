@@ -2,56 +2,16 @@
 require_once 'controller/connection.php';
 include 'controller/administrator-validation.php';
 
-if(isset($_GET['delete'])){
-    $idDelete = $_GET['delete'];
-    $query = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=1 WHERE id='$idDelete'");
-    header("Location: ?pg=data-pendaftar&delete=success");
-}
+if (isset($_GET['delete'])) {
+  $idDelete = $_GET['delete'];
+  $query = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=1 WHERE id='$idDelete'");
+  header("Location: ?pg=data-pendaftar&delete=success");
+} else if (isset($_GET['edit'])) {
+  $idEdit = $_GET['edit'];
+  $queryEdit = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idEdit'");
+  $rowEdit = mysqli_fetch_assoc($queryEdit);
 
-else if(isset($_GET['edit'])){
-    $idEdit = $_GET['edit'];
-    $queryEdit = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idEdit'");
-    $rowEdit = mysqli_fetch_assoc($queryEdit);
-
-    if(isset($_POST['edit'])){
-      $id_jurusan = $_POST['id_jurusan'];
-      $id_gelombang = $_POST['id_gelombang'];
-      $nama_lengkap = $_POST['nama_lengkap'];
-      $nik = $_POST['nik'];
-      $kartu_keluarga = $_POST['kartu_keluarga'];
-      $jenis_kelamin = $_POST['jenis_kelamin'];
-      $tempat_lahir = $_POST['tempat_lahir'];
-      $tanggal_lahir = $_POST['tanggal_lahir'];
-      $pendidikan_terakhir = $_POST['pendidikan_terakhir'];
-      $nama_sekolah = $_POST['nama_sekolah'];
-      $kejuruan = $_POST['kejuruan'];
-      $nomor_hp = $_POST['nomor_hp'];
-      $email = $_POST['email'];
-      $aktivitas_saat_ini = $_POST['aktivitas_saat_ini'];
-      $status = $_POST['status'];
-
-      if(!empty($_FILES['photo']['name'])){
-        $image_name = $_FILES['photo']['name'];
-  
-        $ext = array('jpg','jpeg','png', 'jfif', 'webp', 'heic');
-        $extImage = pathinfo($image_name, PATHINFO_EXTENSION);
-  
-        if(!in_array($extImage, $ext)){
-          header("Location: ?pg=add-data-pendaftar&error=ext");
-        } else {
-          unlink('img/foto_peserta/' . $rowEdit['photo']);
-          $new_image_name = "foto_peserta".$nik.".".$extImage;
-          move_uploaded_file($_FILES['photo']['tmp_name'], 'img/foto_peserta/' . $new_image_name);
-          $queryAdd = mysqli_query($connection, "UPDATE peserta_pelatihan SET id_jurusan='$id_jurusan', id_gelombang='$id_gelombang', nama_lengkap='$nama_lengkap', nik='$nik', kartu_keluarga='$kartu_keluarga', jenis_kelamin='$jenis_kelamin',  tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', pendidikan_terakhir='$pendidikan_terakhir', nama_sekolah='$nama_sekolah', kejuruan='$kejuruan', nomor_hp='$nomor_hp', email='$email', aktivitas_saat_ini='$aktivitas_saat_ini', status='$status', photo='$new_image_name' WHERE id='$idEdit'");
-        } 
-      } else {
-        $queryAdd = mysqli_query($connection, "UPDATE peserta_pelatihan SET id_jurusan='$id_jurusan', id_gelombang='$id_gelombang', nama_lengkap='$nama_lengkap', nik='$nik', kartu_keluarga='$kartu_keluarga', jenis_kelamin='$jenis_kelamin',  tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', pendidikan_terakhir='$pendidikan_terakhir', nama_sekolah='$nama_sekolah', kejuruan='$kejuruan', nomor_hp='$nomor_hp', email='$email', aktivitas_saat_ini='$aktivitas_saat_ini', status='$status' WHERE id='$idEdit'");
-      }
-      header("Location: ?pg=data-pendaftar&add=success");
-  }
-}
-
-else if(isset($_POST['add'])){
+  if (isset($_POST['edit'])) {
     $id_jurusan = $_POST['id_jurusan'];
     $id_gelombang = $_POST['id_gelombang'];
     $nama_lengkap = $_POST['nama_lengkap'];
@@ -68,22 +28,58 @@ else if(isset($_POST['add'])){
     $aktivitas_saat_ini = $_POST['aktivitas_saat_ini'];
     $status = $_POST['status'];
 
-    if(!empty($_FILES['photo']['name'])){
+    if (!empty($_FILES['photo']['name'])) {
       $image_name = $_FILES['photo']['name'];
 
-      $ext = array('jpg','jpeg','png', 'jfif', 'webp', 'heic');
+      $ext = array('jpg', 'jpeg', 'png', 'jfif', 'webp', 'heic');
       $extImage = pathinfo($image_name, PATHINFO_EXTENSION);
 
-      if(!in_array($extImage, $ext)){
+      if (!in_array($extImage, $ext)) {
         header("Location: ?pg=add-data-pendaftar&error=ext");
       } else {
-        $new_image_name = "foto_peserta".$nik.".".$extImage;
+        unlink('img/foto_peserta/' . $rowEdit['photo']);
+        $new_image_name = "foto_peserta" . $nik . "." . $extImage;
         move_uploaded_file($_FILES['photo']['tmp_name'], 'img/foto_peserta/' . $new_image_name);
-        $queryAdd = mysqli_query($connection, "INSERT INTO peserta_pelatihan ( id_jurusan, id_gelombang, nama_lengkap, nik, kartu_keluarga, jenis_kelamin, tempat_lahir, tanggal_lahir, pendidikan_terakhir, nama_sekolah, kejuruan, nomor_hp, email, aktivitas_saat_ini, status, photo ) VALUES ( '$id_jurusan', '$id_gelombang', '$nama_lengkap', '$nik', '$kartu_keluarga', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$pendidikan_terakhir', '$nama_sekolah', '$kejuruan', '$nomor_hp', '$email', '$aktivitas_saat_ini', '$status', '$new_image_name' )");
-      } 
+        $queryAdd = mysqli_query($connection, "UPDATE peserta_pelatihan SET id_jurusan='$id_jurusan', id_gelombang='$id_gelombang', nama_lengkap='$nama_lengkap', nik='$nik', kartu_keluarga='$kartu_keluarga', jenis_kelamin='$jenis_kelamin',  tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', pendidikan_terakhir='$pendidikan_terakhir', nama_sekolah='$nama_sekolah', kejuruan='$kejuruan', nomor_hp='$nomor_hp', email='$email', aktivitas_saat_ini='$aktivitas_saat_ini', status='$status', photo='$new_image_name' WHERE id='$idEdit'");
+      }
     } else {
-      $queryAdd = mysqli_query($connection, "INSERT INTO peserta_pelatihan ( id_jurusan, id_gelombang, nama_lengkap, nik, kartu_keluarga, jenis_kelamin, tempat_lahir, tanggal_lahir, pendidikan_terakhir, nama_sekolah, kejuruan, nomor_hp, email, aktivitas_saat_ini, status) VALUES ( '$id_jurusan', '$id_gelombang', '$nama_lengkap', '$nik', '$kartu_keluarga', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$pendidikan_terakhir', '$nama_sekolah', '$kejuruan', '$nomor_hp', '$email', '$aktivitas_saat_ini', '$status')");
+      $queryAdd = mysqli_query($connection, "UPDATE peserta_pelatihan SET id_jurusan='$id_jurusan', id_gelombang='$id_gelombang', nama_lengkap='$nama_lengkap', nik='$nik', kartu_keluarga='$kartu_keluarga', jenis_kelamin='$jenis_kelamin',  tempat_lahir='$tempat_lahir', tanggal_lahir='$tanggal_lahir', pendidikan_terakhir='$pendidikan_terakhir', nama_sekolah='$nama_sekolah', kejuruan='$kejuruan', nomor_hp='$nomor_hp', email='$email', aktivitas_saat_ini='$aktivitas_saat_ini', status='$status' WHERE id='$idEdit'");
     }
+    header("Location: ?pg=data-pendaftar&add=success");
+  }
+} else if (isset($_POST['add'])) {
+  $id_jurusan = $_POST['id_jurusan'];
+  $id_gelombang = $_POST['id_gelombang'];
+  $nama_lengkap = $_POST['nama_lengkap'];
+  $nik = $_POST['nik'];
+  $kartu_keluarga = $_POST['kartu_keluarga'];
+  $jenis_kelamin = $_POST['jenis_kelamin'];
+  $tempat_lahir = $_POST['tempat_lahir'];
+  $tanggal_lahir = $_POST['tanggal_lahir'];
+  $pendidikan_terakhir = $_POST['pendidikan_terakhir'];
+  $nama_sekolah = $_POST['nama_sekolah'];
+  $kejuruan = $_POST['kejuruan'];
+  $nomor_hp = $_POST['nomor_hp'];
+  $email = $_POST['email'];
+  $aktivitas_saat_ini = $_POST['aktivitas_saat_ini'];
+  $status = $_POST['status'];
+
+  if (!empty($_FILES['photo']['name'])) {
+    $image_name = $_FILES['photo']['name'];
+
+    $ext = array('jpg', 'jpeg', 'png', 'jfif', 'webp', 'heic');
+    $extImage = pathinfo($image_name, PATHINFO_EXTENSION);
+
+    if (!in_array($extImage, $ext)) {
+      header("Location: ?pg=add-data-pendaftar&error=ext");
+    } else {
+      $new_image_name = "foto_peserta" . $nik . "." . $extImage;
+      move_uploaded_file($_FILES['photo']['tmp_name'], 'img/foto_peserta/' . $new_image_name);
+      $queryAdd = mysqli_query($connection, "INSERT INTO peserta_pelatihan ( id_jurusan, id_gelombang, nama_lengkap, nik, kartu_keluarga, jenis_kelamin, tempat_lahir, tanggal_lahir, pendidikan_terakhir, nama_sekolah, kejuruan, nomor_hp, email, aktivitas_saat_ini, status, photo ) VALUES ( '$id_jurusan', '$id_gelombang', '$nama_lengkap', '$nik', '$kartu_keluarga', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$pendidikan_terakhir', '$nama_sekolah', '$kejuruan', '$nomor_hp', '$email', '$aktivitas_saat_ini', '$status', '$new_image_name' )");
+    }
+  } else {
+    $queryAdd = mysqli_query($connection, "INSERT INTO peserta_pelatihan ( id_jurusan, id_gelombang, nama_lengkap, nik, kartu_keluarga, jenis_kelamin, tempat_lahir, tanggal_lahir, pendidikan_terakhir, nama_sekolah, kejuruan, nomor_hp, email, aktivitas_saat_ini, status) VALUES ( '$id_jurusan', '$id_gelombang', '$nama_lengkap', '$nik', '$kartu_keluarga', '$jenis_kelamin', '$tempat_lahir', '$tanggal_lahir', '$pendidikan_terakhir', '$nama_sekolah', '$kejuruan', '$nomor_hp', '$email', '$aktivitas_saat_ini', '$status')");
+  }
   header("Location: ?pg=data-pendaftar&add=success");
 }
 
@@ -92,9 +88,9 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
-      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah'?> Data Pendaftar</h3>
+      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Data Pendaftar</h3>
       <img
         src="<?= isset($_GET['edit']) && !empty($rowEdit['photo']) ? 'img/foto_peserta/' . $rowEdit['photo'] : 'https://placehold.co/100' ?>"
         width="150" alt="" class="mt-3">
@@ -105,11 +101,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_jurusan" class="form-label">Jurusan</label>
             <select name="id_jurusan" id="" class="form-control">
               <option value=""> -- Pilih Jurusan -- </option>
-              <?php while($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
-              <option value="<?= $rowJurusan['id'] ?>"
-                <?= isset($rowEdit['id_jurusan']) && $rowEdit['id_jurusan'] == $rowJurusan['id'] ? 'selected' : ''?>>
-                <?= $rowJurusan['nama_jurusan'] ?>
-              </option>
+              <?php while ($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
+                <option value="<?= $rowJurusan['id'] ?>"
+                  <?= isset($rowEdit['id_jurusan']) && $rowEdit['id_jurusan'] == $rowJurusan['id'] ? 'selected' : '' ?>>
+                  <?= $rowJurusan['nama_jurusan'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>
@@ -117,11 +113,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_gelombang" class="form-label">Gelombang</label>
             <select name="id_gelombang" id="" class="form-control">
               <option value=""> -- Pilih Gelombang -- </option>
-              <?php while($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
-              <option value="<?= $rowGelombang['id'] ?>"
-                <?= isset($rowEdit['id_gelombang']) && $rowEdit['id_gelombang'] == $rowGelombang['id'] ? 'selected' : ''?>>
-                <?= $rowGelombang['nama_gelombang'] ?>
-              </option>
+              <?php while ($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
+                <option value="<?= $rowGelombang['id'] ?>"
+                  <?= isset($rowEdit['id_gelombang']) && $rowEdit['id_gelombang'] == $rowGelombang['id'] ? 'selected' : '' ?>>
+                  <?= $rowGelombang['nama_gelombang'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>

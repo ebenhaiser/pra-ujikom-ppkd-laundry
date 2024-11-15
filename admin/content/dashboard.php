@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="row">
-    <div class="ms-5 mt-3 col-md-11">
+    <div class="mt-3 col-md">
       <div class="card">
         <div class="card-body">
           <div align="center">
@@ -12,5 +12,4 @@
       </div>
     </div>
   </div>
-</div>
 </div>

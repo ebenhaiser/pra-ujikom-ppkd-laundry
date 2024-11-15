@@ -38,7 +38,7 @@ if (isset($_POST['delete'])) {
 ?>
 
 <div class="wrapper">
-    <div class="card mt-3 me-3 ms-3">
+    <div class="card mt-3">
         <div class="card-body">
             <h3 class="card-title">Restore Data Gelombang</h3>
             <form action="" method="post">

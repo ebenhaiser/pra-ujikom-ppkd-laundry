@@ -49,7 +49,7 @@ else if(isset($_GET['restore-all'])){
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Restore Data Level</h3>
       <form action="" method="post">

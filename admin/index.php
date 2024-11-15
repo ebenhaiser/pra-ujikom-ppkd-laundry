@@ -55,29 +55,32 @@ if (empty($_SESSION)) {
       <!-- Layout container -->
       <div class="layout-page">
         <!-- Navbar -->
+        <div class="wrapper">
+          <div class="container">
+            <?php include 'inc/nav.php'; ?>
+            <!-- / Navbar -->
 
-        <?php include 'inc/nav.php'; ?>
-        <!-- / Navbar -->
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+              <!-- Content -->
 
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
-          <!-- Content -->
-
-          <div class="content">
-          <?php
-            if (isset($_GET['pg'])) {
-                if (file_exists('content/' . $_GET['pg'] . '.php')) {
+              <div class="content">
+                <?php
+                if (isset($_GET['pg'])) {
+                  if (file_exists('content/' . $_GET['pg'] . '.php')) {
                     include 'content/' . $_GET['pg'] . '.php';
+                  } else {
+                    header("Location: index.php");
+                  }
                 } else {
-                  header("Location: index.php");
+                  include 'content/dashboard.php';
                 }
-            } else {
-                include 'content/dashboard.php';
-            }
-          ?>
-        </div>
+                ?>
+              </div>
+            </div>
+          </div>
 
-          
+
 
           <!-- Footer -->
           <footer class="content-footer footer bg-footer-theme">

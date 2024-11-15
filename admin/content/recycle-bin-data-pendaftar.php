@@ -6,7 +6,7 @@ $queryDataPendaftar = mysqli_query($connection, "SELECT peserta_pelatihan.*, jur
 ?>
 
 <div class="wrapper">
-    <div class="card mt-3 me-3 ms-3">
+    <div class="card mt-3">
         <div class="card-body">
             <h3 class="card-title">Restore Data Pendaftar</h3>
             <div align="right" class="button-action">

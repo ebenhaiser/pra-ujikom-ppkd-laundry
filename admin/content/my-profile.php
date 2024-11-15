@@ -1,6 +1,5 @@
 <?php
 require_once 'controller/connection.php';
-include 'controller/administrator-validation.php';
 
 
 $idEdit = $_SESSION['id'];
@@ -40,7 +39,7 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
 ?>
 
 <div class="wrapper">
-    <div class="card mt-3 me-3 ms-3">
+    <div class="card mt-3">
         <div class="card-body">
             <h3 class="card-title">My Profile</h3>
             <form action="" method="post" enctype="multipart/form-data">
@@ -83,7 +82,7 @@ $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
                     <div class="col-sm-6 mb-3">
                         <label for="photoProfile" class="form-label">Foto Profil</label>
                         <input type="file" class="form-control" id="foto" name="foto">
-                        <img width="50%" src="<?= !empty($rowEdit['foto']) ? 'img/foto_profil_user/' . $rowEdit['foto'] : 'https://placehold.co/100' ?>" alt="" class="mt-4">
+                        <img width="50%" src="<?= !empty($rowEdit['foto']) ? 'img/foto_profil_user/' . $rowEdit['foto'] : 'https://placehold.co/100' ?>" alt="" class="mt-4 rounded">
                     </div>
                 </div>
                 <div class="mb-3">

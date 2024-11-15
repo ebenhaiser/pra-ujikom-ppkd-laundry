@@ -2,38 +2,34 @@
 require_once 'controller/connection.php';
 include 'controller/administrator-validation.php';
 
-if(isset($_GET['delete'])){
-    $idDelete = $_GET['delete'];
-    $query = mysqli_query($connection, "UPDATE jurusan SET deleted_at=1 WHERE id='$idDelete'");
-    header("Location: ?pg=data-jurusan&delete=success");
-}
+if (isset($_GET['delete'])) {
+  $idDelete = $_GET['delete'];
+  $query = mysqli_query($connection, "UPDATE jurusan SET deleted_at=1 WHERE id='$idDelete'");
+  header("Location: ?pg=data-jurusan&delete=success");
+} else if (isset($_GET['edit'])) {
+  $idEdit = $_GET['edit'];
+  $queryEdit = mysqli_query($connection, "SELECT * FROM jurusan WHERE id='$idEdit'");
+  $rowEdit = mysqli_fetch_assoc($queryEdit);
 
-else if(isset($_GET['edit'])){
-    $idEdit = $_GET['edit'];
-    $queryEdit = mysqli_query($connection, "SELECT * FROM jurusan WHERE id='$idEdit'");
-    $rowEdit = mysqli_fetch_assoc($queryEdit);
+  if (isset($_POST['edit'])) {
+    $nama_jurusan = $_POST['nama_jurusan'];
 
-    if(isset($_POST['edit'])){
-        $nama_jurusan =$_POST['nama_jurusan'];
-
-        $queryEdit = mysqli_query($connection, "UPDATE jurusan SET nama_jurusan='$nama_jurusan' WHERE id='$idEdit'");
-        header("Location: ?pg=data-jurusan&edit=success");
-    }
-}
-
-else if(isset($_POST['add'])){
-    $nama_jurusan =$_POST['nama_jurusan'];
+    $queryEdit = mysqli_query($connection, "UPDATE jurusan SET nama_jurusan='$nama_jurusan' WHERE id='$idEdit'");
+    header("Location: ?pg=data-jurusan&edit=success");
+  }
+} else if (isset($_POST['add'])) {
+  $nama_jurusan = $_POST['nama_jurusan'];
 
 
-    $queryAdd = mysqli_query($connection, "INSERT INTO jurusan (nama_jurusan) VALUES ('$nama_jurusan')");
-    header("Location: ?pg=data-jurusan&add=success");
+  $queryAdd = mysqli_query($connection, "INSERT INTO jurusan (nama_jurusan) VALUES ('$nama_jurusan')");
+  header("Location: ?pg=data-jurusan&add=success");
 }
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
-      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah'?> Data Jurusan</h3>
+      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Data Jurusan</h3>
       <form action="" method="post">
         <div class="row">
           <div class="col-sm-6 mb-3">

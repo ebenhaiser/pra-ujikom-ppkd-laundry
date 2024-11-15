@@ -2,39 +2,35 @@
 require_once 'controller/connection.php';
 include 'controller/administrator-validation.php';
 
-if(isset($_GET['delete'])){
-    $idDelete = $_GET['delete'];
-    $query = mysqli_query($connection, "UPDATE gelombang SET deleted_at=1 WHERE id='$idDelete'");
-    header("Location: ?pg=data-gelombang&delete=success");
-}
+if (isset($_GET['delete'])) {
+  $idDelete = $_GET['delete'];
+  $query = mysqli_query($connection, "UPDATE gelombang SET deleted_at=1 WHERE id='$idDelete'");
+  header("Location: ?pg=data-gelombang&delete=success");
+} else if (isset($_GET['edit'])) {
+  $idEdit = $_GET['edit'];
+  $queryEdit = mysqli_query($connection, "SELECT * FROM gelombang WHERE id='$idEdit'");
+  $rowEdit = mysqli_fetch_assoc($queryEdit);
 
-else if(isset($_GET['edit'])){
-    $idEdit = $_GET['edit'];
-    $queryEdit = mysqli_query($connection, "SELECT * FROM gelombang WHERE id='$idEdit'");
-    $rowEdit = mysqli_fetch_assoc($queryEdit);
-
-    if(isset($_POST['edit'])){
-        $nama_gelombang =$_POST['nama_gelombang'];
-        $aktif = $_POST['aktif'];
-
-        $queryEdit = mysqli_query($connection, "UPDATE gelombang SET nama_gelombang='$nama_gelombang', aktif='$aktif' WHERE id='$idEdit'");
-        header("Location: ?pg=data-gelombang&edit=success");
-    }
-}
-
-else if(isset($_POST['add'])){
-    $nama_gelombang =$_POST['nama_gelombang'];
+  if (isset($_POST['edit'])) {
+    $nama_gelombang = $_POST['nama_gelombang'];
     $aktif = $_POST['aktif'];
 
-    $queryAdd = mysqli_query($connection, "INSERT INTO gelombang (nama_gelombang, aktif) VALUES ('$nama_gelombang', '$aktif')");
-    header("Location: ?pg=data-gelombang&add=success");
+    $queryEdit = mysqli_query($connection, "UPDATE gelombang SET nama_gelombang='$nama_gelombang', aktif='$aktif' WHERE id='$idEdit'");
+    header("Location: ?pg=data-gelombang&edit=success");
+  }
+} else if (isset($_POST['add'])) {
+  $nama_gelombang = $_POST['nama_gelombang'];
+  $aktif = $_POST['aktif'];
+
+  $queryAdd = mysqli_query($connection, "INSERT INTO gelombang (nama_gelombang, aktif) VALUES ('$nama_gelombang', '$aktif')");
+  header("Location: ?pg=data-gelombang&add=success");
 }
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
-      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah'?> Data Gelombang</h3>
+      <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Data Gelombang</h3>
       <form action="" method="post">
         <div class="row">
           <div class="col-sm-6 mb-3">

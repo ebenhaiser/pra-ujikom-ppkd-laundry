@@ -2,25 +2,23 @@
 require_once 'controller/connection.php';
 include 'controller/admin-aplikasi-validation.php';
 
-if(isset($_GET['delete'])){
-    $idDelete = $_GET['delete'];
-    $query = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=1 WHERE id='$idDelete'");
-    header("Location: ?pg=data-pendaftaran-pelatihan&delete=success");
-}
+if (isset($_GET['delete'])) {
+  $idDelete = $_GET['delete'];
+  $query = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=1 WHERE id='$idDelete'");
+  header("Location: ?pg=data-pendaftaran-pelatihan&delete=success");
+} else if (isset($_GET['edit'])) {
+  $idEdit = $_GET['edit'];
+  $queryEdit = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idEdit'");
+  $rowEdit = mysqli_fetch_assoc($queryEdit);
+  $nikPeserta = $rowEdit['nik'];
+  $queryRiwayatPelatihan = mysqli_query($connection, "SELECT peserta_pelatihan.*, jurusan.nama_jurusan, gelombang.nama_gelombang FROM peserta_pelatihan LEFT JOIN jurusan ON peserta_pelatihan.id_jurusan=jurusan.id LEFT JOIN gelombang ON peserta_pelatihan.id_gelombang=gelombang.id WHERE peserta_pelatihan.deleted_at=0 AND peserta_pelatihan.nik=$nikPeserta ORDER BY id DESC");
 
-else if(isset($_GET['edit'])){
-    $idEdit = $_GET['edit'];
-    $queryEdit = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idEdit'");
-    $rowEdit = mysqli_fetch_assoc($queryEdit);
-    $nikPeserta = $rowEdit['nik'];
-    $queryRiwayatPelatihan = mysqli_query($connection, "SELECT peserta_pelatihan.*, jurusan.nama_jurusan, gelombang.nama_gelombang FROM peserta_pelatihan LEFT JOIN jurusan ON peserta_pelatihan.id_jurusan=jurusan.id LEFT JOIN gelombang ON peserta_pelatihan.id_gelombang=gelombang.id WHERE peserta_pelatihan.deleted_at=0 AND peserta_pelatihan.nik=$nikPeserta ORDER BY id DESC");
-    
-    if(isset($_POST['edit'])){
-      $status = $_POST['status'];
+  if (isset($_POST['edit'])) {
+    $status = $_POST['status'];
 
-        $queryEdit = mysqli_query($connection, "UPDATE peserta_pelatihan SET status='$status' WHERE id='$idEdit'");
-        header("Location: ?pg=data-pendaftaran-pelatihan&edit=success");
-    }
+    $queryEdit = mysqli_query($connection, "UPDATE peserta_pelatihan SET status='$status' WHERE id='$idEdit'");
+    header("Location: ?pg=data-pendaftaran-pelatihan&edit=success");
+  }
 }
 
 $queryJurusan = mysqli_query($connection, "SELECT * FROM jurusan");
@@ -28,7 +26,7 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
 ?>
 
 <div class="wrapper">
-  <div class="card mt-3 me-3 ms-3">
+  <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Edit Data Pendaftaran Pelatihan</h3>
       <img
@@ -56,11 +54,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_jurusan" class="form-label">Jurusan</label>
             <select name="id_jurusan" id="" class="form-control" disabled="true">
               <option value=""> -- Pilih Jurusan -- </option>
-              <?php while($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
-              <option value="<?= $rowJurusan['id'] ?>"
-                <?= isset($rowEdit['id_jurusan']) && $rowEdit['id_jurusan'] == $rowJurusan['id'] ? 'selected' : ''?>>
-                <?= $rowJurusan['nama_jurusan'] ?>
-              </option>
+              <?php while ($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
+                <option value="<?= $rowJurusan['id'] ?>"
+                  <?= isset($rowEdit['id_jurusan']) && $rowEdit['id_jurusan'] == $rowJurusan['id'] ? 'selected' : '' ?>>
+                  <?= $rowJurusan['nama_jurusan'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>
@@ -68,11 +66,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_gelombang" class="form-label">Gelombang</label>
             <select name="id_gelombang" id="" class="form-control" disabled="true">
               <option value=""> -- Pilih Jurusan -- </option>
-              <?php while($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
-              <option value="<?= $rowGelombang['id'] ?>"
-                <?= isset($rowEdit['id_gelombang']) && $rowEdit['id_gelombang'] == $rowGelombang['id'] ? 'selected' : ''?>>
-                <?= $rowGelombang['nama_gelombang'] ?>
-              </option>
+              <?php while ($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
+                <option value="<?= $rowGelombang['id'] ?>"
+                  <?= isset($rowEdit['id_gelombang']) && $rowEdit['id_gelombang'] == $rowGelombang['id'] ? 'selected' : '' ?>>
+                  <?= $rowGelombang['nama_gelombang'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>
@@ -166,30 +164,30 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
               </thead>
               <tbody>
                 <?php
-                $no=1;
+                $no = 1;
                 while ($rowRiwayatPelatihan = mysqli_fetch_assoc($queryRiwayatPelatihan)) :
                 ?>
-                <tr>
-                  <td><?= $no++ ?></td>
-                  <td><?= $rowRiwayatPelatihan['nama_jurusan'] ?></td>
-                  <td><?= $rowRiwayatPelatihan['nama_gelombang'] ?></td>
-                  <?php
-                  switch($rowRiwayatPelatihan['status']) {
-                    case 0:
-                      $status = "Pending";
-                      break;
-                    case 1:
-                      $status = "Wawancara";
-                      break;
-                    case 2:
-                      $status = "Lolos";
-                      break;
-                    case 3:
-                      $status = "Tidak Lolos";
-                  }
-                  ?>
-                  <td><?= $status ?></td>
-                </tr>
+                  <tr>
+                    <td><?= $no++ ?></td>
+                    <td><?= $rowRiwayatPelatihan['nama_jurusan'] ?></td>
+                    <td><?= $rowRiwayatPelatihan['nama_gelombang'] ?></td>
+                    <?php
+                    switch ($rowRiwayatPelatihan['status']) {
+                      case 0:
+                        $status = "Pending";
+                        break;
+                      case 1:
+                        $status = "Wawancara";
+                        break;
+                      case 2:
+                        $status = "Lolos";
+                        break;
+                      case 3:
+                        $status = "Tidak Lolos";
+                    }
+                    ?>
+                    <td><?= $status ?></td>
+                  </tr>
                 <?php endwhile ?>
             </table>
           </div>
