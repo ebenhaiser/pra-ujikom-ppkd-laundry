@@ -36,7 +36,7 @@ if (isset($_GET['delete'])) {
             <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Masukkan nama"
               value="<?= isset($_GET['edit']) ? $rowEdit['level_name'] : '' ?>" required>
           </div>
-          <div class="mb-3">
+          <div class="">
             <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
               <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
             </button>

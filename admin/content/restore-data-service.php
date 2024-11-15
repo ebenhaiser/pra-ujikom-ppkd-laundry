@@ -65,7 +65,7 @@ if (isset($_POST['delete'])) {
               placeholder="Masukkan password" <?= isset($_GET['restore']) ? '' : 'required' ?>>
           </div> -->
                 </div>
-                <div class="mb-3 mt-1">
+                <div class="">
                     <button type="submit" class="btn" style="background-color: #00bf0d; color:white;" name="restore">
                         Restore
                     </button>

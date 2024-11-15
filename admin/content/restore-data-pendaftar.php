@@ -2,44 +2,34 @@
 require_once 'controller/connection.php';
 include 'controller/administrator-validation.php';
 
-if(isset($_POST['delete'])){
-    $idDelete = $_GET['restore'];
-    $query = mysqli_query($connection, "DELETE FROM peserta_pelatihan WHERE id='$idDelete'");
-    header("Location: ?pg=recycle-bin-data-pendaftar&delete=success");
-}
-
-else if(isset($_GET['delete-row'])){
+if (isset($_POST['delete'])) {
+  $idDelete = $_GET['restore'];
+  $query = mysqli_query($connection, "DELETE FROM peserta_pelatihan WHERE id='$idDelete'");
+  header("Location: ?pg=recycle-bin-data-pendaftar&delete=success");
+} else if (isset($_GET['delete-row'])) {
   $idDelete = $_GET['delete-row'];
   $query = mysqli_query($connection, "DELETE FROM peserta_pelatihan WHERE id='$idDelete'");
   header("Location: ?pg=recycle-bin-data-pendaftar&delete=success");
-}
+} else if (isset($_GET['delete-all'])) {
+  $queryDeleteAll = mysqli_query($connection, "DELETE FROM peserta_pelatihan WHERE deleted_at=1");
+  header("Location:?pg=recycle-bin-data-pendaftar&deleted=all=success");
+} else if (isset($_GET['restore'])) {
+  $idRestore = $_GET['restore'];
+  $queryRestore = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idRestore'");
+  $rowRestore = mysqli_fetch_assoc($queryRestore);
 
-else if(isset($_GET['delete-all'])){
-    $queryDeleteAll = mysqli_query($connection, "DELETE FROM peserta_pelatihan WHERE deleted_at=1");
-    header("Location:?pg=recycle-bin-data-pendaftar&deleted=all=success");
-}
-
-else if(isset($_GET['restore'])){
-    $idRestore = $_GET['restore'];
-    $queryRestore = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE id='$idRestore'");
-    $rowRestore = mysqli_fetch_assoc($queryRestore);
-
-    if(isset($_POST['restore'])) {
-      $queryRestore = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=0 WHERE id='$idRestore'");
-      header("Location:?pg=recycle-bin-data-pendaftar&restore=success");
-    }
-}
-
-else if(isset($_GET['restore-row'])) {
+  if (isset($_POST['restore'])) {
+    $queryRestore = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=0 WHERE id='$idRestore'");
+    header("Location:?pg=recycle-bin-data-pendaftar&restore=success");
+  }
+} else if (isset($_GET['restore-row'])) {
   $idRestore = $_GET['restore-row'];
   $queryRestore = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=0 WHERE id='$idRestore'");
   header("Location:?pg=recycle-bin-data-pendaftar&restore=success");
-}
-
-else if(isset($_GET['restore-all'])){
+} else if (isset($_GET['restore-all'])) {
   $queryRestoreAll = mysqli_query($connection, "SELECT * FROM peserta_pelatihan WHERE deleted_at=1");
-  
-  while($rowRestoreAll = mysqli_fetch_assoc($queryRestoreAll)){
+
+  while ($rowRestoreAll = mysqli_fetch_assoc($queryRestoreAll)) {
     $IDRestoreAll = $rowRestoreAll['id'];
     $restoreAll = mysqli_query($connection, "UPDATE peserta_pelatihan SET deleted_at=0 WHERE id='$IDRestoreAll'");
   }
@@ -64,11 +54,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_jurusan" class="form-label">Jurusan</label>
             <select name="id_jurusan" id="" class="form-control" disabled="true">
               <option value=""> -- Pilih Jurusan -- </option>
-              <?php while($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
-              <option value="<?= $rowJurusan['id'] ?>"
-                <?= isset($rowRestore['id_jurusan']) && $rowRestore['id_jurusan'] == $rowJurusan['id'] ? 'selected' : ''?>>
-                <?= $rowJurusan['nama_jurusan'] ?>
-              </option>
+              <?php while ($rowJurusan = mysqli_fetch_assoc($queryJurusan)) : ?>
+                <option value="<?= $rowJurusan['id'] ?>"
+                  <?= isset($rowRestore['id_jurusan']) && $rowRestore['id_jurusan'] == $rowJurusan['id'] ? 'selected' : '' ?>>
+                  <?= $rowJurusan['nama_jurusan'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>
@@ -76,11 +66,11 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="id_gelombang" class="form-label">Gelombang</label>
             <select name="id_gelombang" id="" class="form-control" disabled="true">
               <option value=""> -- Pilih Gelombang -- </option>
-              <?php while($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
-              <option value="<?= $rowGelombang['id'] ?>"
-                <?= isset($rowRestore['id_gelombang']) && $rowRestore['id_gelombang'] == $rowGelombang['id'] ? 'selected' : ''?>>
-                <?= $rowGelombang['nama_gelombang'] ?>
-              </option>
+              <?php while ($rowGelombang = mysqli_fetch_assoc($queryGelombang)) : ?>
+                <option value="<?= $rowGelombang['id'] ?>"
+                  <?= isset($rowRestore['id_gelombang']) && $rowRestore['id_gelombang'] == $rowGelombang['id'] ? 'selected' : '' ?>>
+                  <?= $rowGelombang['nama_gelombang'] ?>
+                </option>
               <?php endwhile ?>
             </select>
           </div>
@@ -177,14 +167,14 @@ $queryGelombang = mysqli_query($connection, "SELECT * FROM gelombang");
             <label for="photo" class="form-label">Foto</label>
             <input type="file" class="form-control" id="photo" name="photo">
           </div> -->
-          <div class="mb-3 mt-1">
-          <button type="submit" class="btn" style="background-color: #00bf0d; color:white;" name="restore">
-            Restore
-          </button>
-          <button type="submit" class="btn" style="background-color: #f01202; color:white;" name="delete">
-            Delete
-          </button>
-        </div>
+          <div class="">
+            <button type="submit" class="btn" style="background-color: #00bf0d; color:white;" name="restore">
+              Restore
+            </button>
+            <button type="submit" class="btn" style="background-color: #f01202; color:white;" name="delete">
+              Delete
+            </button>
+          </div>
       </form>
     </div>
   </div>

@@ -52,7 +52,7 @@ if (isset($_GET['delete'])) {
                         <textarea type="description" class="form-control" id="description" name="description" for="description"><?= isset($_GET['edit']) ? $rowEdit['description'] : '' ?></textarea>
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="">
                     <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
                         <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
                     </button>

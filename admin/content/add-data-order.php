@@ -60,17 +60,8 @@ $queryCustomer = mysqli_query($connection, "SELECT * FROM customer WHERE deleted
                         <input type="date" class="form-control" id="order_date" name="order_date" placeholder="Masukkan order date"
                             value="<?= isset($_GET['edit']) ? $rowEdit['order_date'] : '' ?>" required>
                     </div>
-
-                    <div class="col-sm-6 mb-3">
-                        <label for="order_status" class="form-label">Order Status:</label>
-                        <select class="form-control" name="order_status" id="">
-                            <option value="0"> -- order status -- </option>
-                            <option value="0" <?= isset($_GET['edit']) && $rowEdit['order_status'] == 0 ? 'selected' : '' ?>>New</option>
-                            <option value="1" <?= isset($_GET['edit']) && $rowEdit['order_status'] == 0 ? 'selected' : '' ?>>Done</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="mb-3">
+                <div class="">
                     <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
                         <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
                     </button>

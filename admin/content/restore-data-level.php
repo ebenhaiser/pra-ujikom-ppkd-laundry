@@ -49,7 +49,7 @@ if (isset($_POST['delete'])) {
             <input type="text" class="form-control" id="level_name" name="level_name" placeholder="Masukkan nama"
               value="<?= isset($_GET['restore']) ? $rowRestore['level_name'] : '' ?>" readonly>
           </div>
-          <div class="mb-3 mt-1">
+          <div class="">
             <button type="submit" class="btn" style="background-color: #00bf0d; color:white;" name="restore">
               Restore
             </button>

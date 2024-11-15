@@ -54,7 +54,7 @@ $queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0"
                             placeholder="Masukkan address" <?= isset($_GET['edit']) ? '' : 'required' ?>><?= isset($_GET['edit']) ? $rowEdit['address'] : '' ?></textarea>
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="">
                     <button type="submit" class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
                         <?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?>
                     </button>
