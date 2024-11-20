@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
   <div class="row">
     <div class="mt-3 col-md">
       <div class="card">

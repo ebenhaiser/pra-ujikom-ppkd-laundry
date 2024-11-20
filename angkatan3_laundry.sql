@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2024 at 02:38 AM
+-- Generation Time: Nov 20, 2024 at 09:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -99,12 +99,20 @@ CREATE TABLE `trans_order` (
   `id` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
   `order_code` varchar(50) NOT NULL,
-  `order_date` date NOT NULL,
+  `order_date` varchar(50) NOT NULL,
   `order_status` tinyint(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trans_order`
+--
+
+INSERT INTO `trans_order` (`id`, `id_customer`, `order_code`, `order_date`, `order_status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(30, 2, 'INV-20112024-0001', 'Wednesday, 20-11-2024', 0, '2024-11-20 05:06:15', '2024-11-20 05:08:19', 0),
+(31, 3, 'INV-20112024-00031', 'Wednesday, 20-11-2024', 0, '2024-11-20 05:06:41', '2024-11-20 05:06:41', 0);
 
 -- --------------------------------------------------------
 
@@ -118,11 +126,20 @@ CREATE TABLE `trans_order_detail` (
   `id_service` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
   `subtotal` int(11) NOT NULL,
-  `notes` text NOT NULL,
+  `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trans_order_detail`
+--
+
+INSERT INTO `trans_order_detail` (`id`, `id_order`, `id_service`, `qty`, `subtotal`, `notes`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(24, 30, 2, 6, 27000, NULL, '2024-11-20 05:06:15', '2024-11-20 05:06:15', 0),
+(25, 31, 1, 5, 30000, NULL, '2024-11-20 05:06:41', '2024-11-20 05:06:41', 0),
+(26, 31, 4, 7, 49000, NULL, '2024-11-20 05:06:41', '2024-11-20 05:06:41', 0);
 
 -- --------------------------------------------------------
 
@@ -255,13 +272,13 @@ ALTER TABLE `trans_laundry_pickup`
 -- AUTO_INCREMENT for table `trans_order`
 --
 ALTER TABLE `trans_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `trans_order_detail`
 --
 ALTER TABLE `trans_order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `type_of_service`

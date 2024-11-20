@@ -4,7 +4,7 @@ include 'controller/admin-validation.php';
 $queryDataUser = mysqli_query($connection, "SELECT user.id, user.deleted_at, user.name, user.email, level.level_name FROM user LEFT JOIN level ON user.id_level = level.id WHERE user.deleted_at=0 ORDER BY user.id_level DESC, user.id DESC");
 ?>
 
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
   <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Data User</h3>

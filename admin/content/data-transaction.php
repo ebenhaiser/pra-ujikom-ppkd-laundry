@@ -1,15 +1,15 @@
 <?php
 include 'controller/admin-validation.php';
 
-$queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.customer_name FROM trans_order LEFT JOIN customer ON trans_order.id_customer = customer.id WHERE trans_order.deleted_at=0 ORDER BY trans_order.order_date DESC");
+$queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.customer_name FROM trans_order LEFT JOIN customer ON trans_order.id_customer = customer.id WHERE trans_order.deleted_at=0 ORDER BY trans_order.id DESC");
 ?>
 
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
     <div class="card mt-3">
         <div class="card-body">
             <h3 class="card-title">Data Transaction</h3>
             <div align="right" class="button-action">
-                <a href="?pg=add-data-order" class="btn btn-primary">Add</a>
+                <a href="?pg=add-data-transaction" class="btn btn-primary">Add</a>
             </div>
             <table class="table table-bordered table-striped table-hover table-responsive mt-3">
                 <thead>
@@ -30,30 +30,36 @@ $queryDataOrder = mysqli_query($connection, "SELECT trans_order.*, customer.cust
                             <td><?= $no++ ?></td>
                             <td><?= isset($rowDataOrder['order_code']) ? $rowDataOrder['order_code'] : '' ?></td>
                             <td><?= isset($rowDataOrder['customer_name']) ? $rowDataOrder['customer_name'] : '' ?></td>
-                            <td><?= isset($rowDataOrder['order_date']) ? $rowDataOrder_date['order'] : '' ?></td>
+                            <td><?= isset($rowDataOrder['order_date']) ? $rowDataOrder['order_date'] : '' ?></td>
                             <?php
                             switch ($rowDataOrder['order_status']) {
                                 case 0:
-                                    $status = 'New';
+                                    $status = "<span class='badge bg-warning'>New</span>";
                                     break;
                                 case 1:
-                                    $status = 'Done';
+                                    $status = "<span class='badge bg-success'>Done</span>";
                                     break;
                                 default:
-                                    $status = 'Unknown';
+                                    $status = "<span>Unknown</span>";
                                     break;
                             }
                             ?>
                             <td><?= $status ?></td>
                             <td>
-                                <a href="?pg=add-data-order&print=<?php echo $rowDataOrder['id'] ?>">
+                                <a href="?pg=add-data-transaction&detail=<?php echo $rowDataOrder['id'] ?>">
                                     <button class="btn btn-light">
-                                        <span class="tf-icon bx bx-print bx-18px"></span>
+                                        <span class="tf-icon bx bx-show bx-18px"></span>
+                                    </button>
+                                </a>
+                                |
+                                <a href="printh.php?id=<?php echo $rowDataOrder['id'] ?>">
+                                    <button class="btn btn-light">
+                                        <span class="tf-icon bx bx-printer bx-18px"></span>
                                     </button>
                                 </a>
                                 |
                                 <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?pg=add-data-order&delete=<?php echo $rowDataOrder['id'] ?>">
+                                    href="?pg=add-data-transaction&delete=<?php echo $rowDataOrder['id'] ?>">
                                     <button class="btn btn-light">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                                             viewBox="0 0 16 16">

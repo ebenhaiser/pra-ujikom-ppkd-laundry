@@ -6,7 +6,7 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
 ?>
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <div class="app-brand demo gap-2 mb-4">
+  <div class="app-brand demo gap-2 mb-4 mt-4">
     <img src="img/logo/logo.png" alt="" width="30px"><br><br>
     <span class="demo text-body fw-bolder" style="font-size: 25px;">Laundry Faith</span>
 
@@ -122,8 +122,8 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
         </a>
       </li>
       <li
-        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-order' || $_GET['pg'] == 'add-data-order')) ? 'active' : '' ?>">
-        <a href="?pg=data-order" class="menu-link gap-3">
+        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-transaction' || $_GET['pg'] == 'add-data-transaction')) ? 'active' : '' ?>">
+        <a href="?pg=data-transaction" class="menu-link gap-3">
           <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
@@ -187,8 +187,8 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
         </a>
       </li>
       <li
-        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'recycle-bin-data-order' || $_GET['pg'] == 'restore-data-order')) ? 'active' : '' ?>">
-        <a href="?pg=recycle-bin-data-order" class="menu-link gap-3">
+        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'recycle-bin-data-transaction' || $_GET['pg'] == 'restore-data-transaction')) ? 'active' : '' ?>">
+        <a href="?pg=recycle-bin-data-transaction" class="menu-link gap-3">
           <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />

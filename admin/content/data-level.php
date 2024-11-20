@@ -4,7 +4,7 @@ include 'controller/admin-validation.php';
 
 ?>
 
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
   <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title">Data Level</h3>

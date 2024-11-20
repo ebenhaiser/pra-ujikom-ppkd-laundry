@@ -10,7 +10,6 @@ if (isset($_GET['delete'])) {
   $idEdit = $_GET['edit'];
   $queryEdit = mysqli_query($connection, "SELECT * FROM user WHERE id='$idEdit'");
   $rowEdit = mysqli_fetch_assoc($queryEdit);
-
   if (isset($_POST['edit'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -33,7 +32,7 @@ if (isset($_GET['delete'])) {
 $queryLevel = mysqli_query($connection, "SELECT * FROM level WHERE deleted_at=0");
 ?>
 
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
   <div class="card mt-3">
     <div class="card-body">
       <h3 class="card-title"><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Data User</h3>

@@ -4,7 +4,7 @@ include 'controller/admin-validation.php';
 $queryDataCustomer = mysqli_query($connection, "SELECT* FROM customer  WHERE deleted_at=0 ORDER BY id DESC");
 ?>
 
-<div class="wrapper">
+<div class="wrapper flex-grow-1 container-p-y">
     <div class="card mt-3">
         <div class="card-body">
             <h3 class="card-title">Data Customer</h3>
