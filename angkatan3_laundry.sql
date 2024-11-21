@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 09:32 AM
+-- Generation Time: Nov 21, 2024 at 09:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,8 +43,8 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`id`, `customer_name`, `phone`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'test', '1234', 'werswfgfhfgh', '2024-11-15 02:38:50', '2024-11-15 05:11:56', 1),
-(2, 'Atio', '084567890342', 'JL. Jalan jauh', '2024-11-15 04:40:58', '2024-11-15 04:40:58', 0),
-(3, 'Rangga', '0809876543', 'Jl. doang jadian kagak', '2024-11-15 05:11:43', '2024-11-15 05:11:51', 0);
+(2, 'Atio', '084567890342', 'JL. Jalan Jauh', '2024-11-15 04:40:58', '2024-11-21 06:27:54', 0),
+(3, 'Rangga', '0809876543', 'Jl. Doang Jadian Kagak', '2024-11-15 05:11:43', '2024-11-21 06:28:10', 0);
 
 -- --------------------------------------------------------
 
@@ -81,13 +81,20 @@ CREATE TABLE `trans_laundry_pickup` (
   `id_order` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
   `pickup_date` date NOT NULL,
-  `pickup_pay` int(11) NOT NULL,
-  `pickup_change` int(11) NOT NULL,
+  `pickup_pay` float NOT NULL,
+  `pickup_change` float NOT NULL,
   `notes` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `trans_laundry_pickup`
+--
+
+INSERT INTO `trans_laundry_pickup` (`id`, `id_order`, `id_customer`, `pickup_date`, `pickup_pay`, `pickup_change`, `notes`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 31, 3, '2024-11-22', 100000, 21000, '', '2024-11-21 04:46:31', '2024-11-21 07:47:50', 0);
 
 -- --------------------------------------------------------
 
@@ -99,7 +106,7 @@ CREATE TABLE `trans_order` (
   `id` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
   `order_code` varchar(50) NOT NULL,
-  `order_date` varchar(50) NOT NULL,
+  `order_date` date NOT NULL,
   `order_status` tinyint(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -111,8 +118,8 @@ CREATE TABLE `trans_order` (
 --
 
 INSERT INTO `trans_order` (`id`, `id_customer`, `order_code`, `order_date`, `order_status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(30, 2, 'INV-20112024-0001', 'Wednesday, 20-11-2024', 0, '2024-11-20 05:06:15', '2024-11-20 05:08:19', 0),
-(31, 3, 'INV-20112024-00031', 'Wednesday, 20-11-2024', 0, '2024-11-20 05:06:41', '2024-11-20 05:06:41', 0);
+(30, 2, 'INV-20112024-0001', '2024-11-21', 0, '2024-11-20 05:06:15', '2024-11-21 07:47:35', 0),
+(31, 3, 'INV-20112024-00031', '2024-11-21', 1, '2024-11-20 05:06:41', '2024-11-21 07:47:42', 0);
 
 -- --------------------------------------------------------
 
@@ -266,7 +273,7 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `trans_laundry_pickup`
 --
 ALTER TABLE `trans_laundry_pickup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `trans_order`
