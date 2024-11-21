@@ -122,7 +122,7 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
         </a>
       </li>
       <li
-        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-transaction' || $_GET['pg'] == 'add-data-transaction')) ? 'active' : '' ?>">
+        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-transaction' || $_GET['pg'] == 'add-data-transaction' || $_GET['pg'] == 'add-data-pickup')) ? 'active' : '' ?>">
         <a href="?pg=data-transaction" class="menu-link gap-3">
           <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
@@ -132,6 +132,27 @@ $rowNavbarUser = mysqli_fetch_assoc($queryNavbarUser);
           <div data-i18n="Account">Data Transaction</div>
         </a>
       </li>
+      <li
+        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-pickup')) ? 'active' : '' ?>">
+        <a href="?pg=data-pickup" class="menu-link gap-3">
+          <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-handbag" viewBox="0 0 16 16">
+            <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z" />
+          </svg>
+          <div data-i18n="Account">Data Pickup</div>
+        </a>
+      </li>
+      <li
+        class="menu-item <?= (isset($_GET['pg']) && ($_GET['pg'] == 'data-report')) ? 'active' : '' ?>">
+        <a href="?pg=data-report" class="menu-link gap-3">
+          <!-- <i class="menu-icon tf-icons bx bx-home-circle"></i> -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
+            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+          </svg>
+          <div data-i18n="Account">Data Report</div>
+        </a>
+      </li>
+
 
       <!-- Recycle Bin -->
       <li class="menu-header small text-uppercase">
